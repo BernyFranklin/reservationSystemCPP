@@ -12,10 +12,10 @@
 using namespace std;
 
 // Function declorations (prototypes)
-char **CreateArrayOfSeats( int numberOfRows, int seats);
-void InitializeSeats ( char **ArrayOfSeats, int numberOfRows, int seats);
-void DisplayArrayOfSeats ( char **ArrayOfSeats, int numberOfRows, int seats);
-void MemoryCleanup ( char **ArrayOfSeats, int numberOfRows, int seats);
+char **CreateArrayOfSeats (int numberOfRows, int seats);
+void InitializeSeats (char **ArrayOfSeats, int numberOfRows, int seats);
+void DisplayArrayOfSeats (char **ArrayOfSeats, int numberOfRows, int seats);
+void MemoryCleanup (char **ArrayOfSeats, int numberOfRows, int seats);
 
 // Start main
 int main(int argc, const char * argv[]) {
@@ -24,7 +24,7 @@ int main(int argc, const char * argv[]) {
 }   // End of main
 
 // Start of **CreateArrayOfSeats
-char **CreateArrayOfSeats ( int numberOfRows, int seats) {
+char **CreateArrayOfSeats (int numberOfRows, int seats) {
     // ** means pointers to pointers
     char **ArrayOfSeats;
     
@@ -37,4 +37,17 @@ char **CreateArrayOfSeats ( int numberOfRows, int seats) {
     
     // Return pointer to the array back to main
     return ArrayOfSeats;
-}
+    
+}   // End of **CreateArrayOfSeats
+
+// Start InitializeSeats
+void InitializeSeats (char **ArrayOfSeats, int numberOfRows, int seats) {
+    // Initialize the data for each row
+    for (int r = 0; r < numberOfRows; r++) {
+        for (int s = 0; s < seats; s++)
+            ArrayOfSeats[r][s] = 'A' + s;   // Put A B C etc in each row
+    }   // End of outer loop
+    
+}   // End of InitializeSeats
+
+// Start of DisplayArrayOfSeats
