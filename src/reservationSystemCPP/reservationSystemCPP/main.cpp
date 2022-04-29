@@ -14,7 +14,7 @@ using namespace std;
 // Function declorations (prototypes)
 char **CreateArrayOfSeats (int numberOfRows, int seats);
 void InitializeSeats (char **ArrayOfSeats, int numberOfRows, int seats);
-void DisplayArrayOfSeats (char **ArrayOfSeats, int numberOfRows, int seats);
+void DisplayArrayOfSeats (char **ArrayOfSeats, int numberOfRows, int numberOfSeats);
 void MemoryCleanup (char **ArrayOfSeats, int numberOfRows, int seats);
 
 // Start main
@@ -51,3 +51,16 @@ void InitializeSeats (char **ArrayOfSeats, int numberOfRows, int seats) {
 }   // End of InitializeSeats
 
 // Start of DisplayArrayOfSeats
+void DisplayArrayOfSeats (char **ArrayOfSeats, int numberOfRows, int numberOfSeats) {
+    // For each row
+    for (int r = 0; r < numberOfRows; r++) {
+        cout.width(2);
+        cout << r+1 << ' ';   // Display row count starting at 1
+        // Display info for each seat
+        for (int s = 0; s < numberOfSeats; s++)
+            cout << ArrayOfSeats[r][s] << ' ';
+        // New line each row
+        cout << endl;
+    }   // End of loop
+    
+}   // End of DisplayArrayOfSeats
