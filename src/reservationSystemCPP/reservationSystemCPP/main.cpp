@@ -12,10 +12,10 @@
 using namespace std;
 
 // Function declorations (prototypes)
-char **CreateArrayOfSeats (int numberOfRows, int seats);
-void InitializeSeats (char **ArrayOfSeats, int numberOfRows, int seats);
+char **CreateArrayOfSeats (int numberOfRows, int numberOfSeats);
+void InitializeSeats (char **ArrayOfSeats, int numberOfRows, int numberOfSeats);
 void DisplayArrayOfSeats (char **ArrayOfSeats, int numberOfRows, int numberOfSeats);
-void MemoryCleanup (char **ArrayOfSeats, int numberOfRows, int seats);
+void MemoryCleanup (char **ArrayOfSeats, int numberOfRows, int numberOfSeats);
 
 // Start main
 int main(int argc, const char * argv[]) {
@@ -24,7 +24,7 @@ int main(int argc, const char * argv[]) {
 }   // End of main
 
 // Start of **CreateArrayOfSeats
-char **CreateArrayOfSeats (int numberOfRows, int seats) {
+char **CreateArrayOfSeats (int numberOfRows, int numberOfSeats) {
     // ** means pointers to pointers
     char **ArrayOfSeats;
     
@@ -33,7 +33,7 @@ char **CreateArrayOfSeats (int numberOfRows, int seats) {
     
     // Create an array of seats for each row
     for (int r = 0; r < numberOfRows; r++)
-        ArrayOfSeats[r] = new char[seats];
+        ArrayOfSeats[r] = new char[numberOfSeats];
     
     // Return pointer to the array back to main
     return ArrayOfSeats;
@@ -41,10 +41,10 @@ char **CreateArrayOfSeats (int numberOfRows, int seats) {
 }   // End of **CreateArrayOfSeats
 
 // Start InitializeSeats
-void InitializeSeats (char **ArrayOfSeats, int numberOfRows, int seats) {
+void InitializeSeats (char **ArrayOfSeats, int numberOfRows, int numberOfSeats) {
     // Initialize the data for each row
     for (int r = 0; r < numberOfRows; r++) {
-        for (int s = 0; s < seats; s++)
+        for (int s = 0; s < numberOfSeats; s++)
             ArrayOfSeats[r][s] = 'A' + s;   // Put A B C etc in each row
     }   // End of outer loop
     
@@ -64,3 +64,12 @@ void DisplayArrayOfSeats (char **ArrayOfSeats, int numberOfRows, int numberOfSea
     }   // End of loop
     
 }   // End of DisplayArrayOfSeats
+
+// Start MemoryCleanup
+void MemoryCleanup (char **ArrayOfSeats, int numberOfRows, int numberOfSeats) {
+    // Delete each row individually
+    for (int r = 0; r < numberOfRows; r++)
+        delete [] ArrayOfSeats[r];
+    // Delete the row array
+    delete [] ArrayOfSeats;
+}   // End of MemoryCleanup
