@@ -2,8 +2,8 @@
  * reservationSystemCPP Version#1.0
  * Frank Bernal
  * CIS 054 C/C++ Programming
- * Input: rowSelection, seatSelection
- * Output: available seating
+ * Input: numberOfRows, numberOfSeats, rowSelection, seatSelection,
+ * Output: available seating, seatsAvailable, seatCount
  * 29 April 2022
  */
 
@@ -31,8 +31,12 @@ int main(int argc, const char * argv[]) {
     int seat;             // Index into ArrayOfSeats, 0 to numbersOfSeats -1
     int seatCount = 0;    // Counter for seats taken
     int seatsAvailable;   // Counter for seats available
+    char moreSeats;       // Used for repeat loop option
     
-    
+    // Welcome Banner
+    cout << "=========================================" << endl;
+    cout << "     Reservation Tracker Version 1.0     " << endl;
+    cout << "=========================================" << endl << endl;
     // Get the number of numberOfRows and seats from the user
     // User input checked for valid numbers to create an array using
     // inputValidator()
@@ -46,8 +50,16 @@ int main(int argc, const char * argv[]) {
     
     // Get seat selections
     do {
+        // If seatsAvailable == 0 break out
+        if (seatsAvailable == 0) {
+            cout << endl;
+            cout << "All available seats have been filled" << endl;
+            break;
+        }   // End of if
+        
+        // Ask for user selection
         cout << endl << "Enter a seat selection" << endl;
-        cout << "  (example 5F -or- 00 to Quit: ";
+        cout << "  (example 5F -or- 00 to Quit): ";
         cin  >> rowSelection;    // Get row from user
         cin  >> seatSelection;   // Get seat from user
         
@@ -63,25 +75,59 @@ int main(int argc, const char * argv[]) {
         // Convert A to 0, B to 1 etc
         seat = seatSelection - 'A';
         
-        // Verify seat is available here=======
-        if (ArrayOfSeats[row][seat] == '-')
+        // Is row out of bounds?
+        if (row > numberOfRows) {
+            cout << "Row must be between 1 and " << numberOfRows << endl;
+            continue;
+        }   // End of out of bounds
+        
+        // Is Seat out of bounds
+        // Set variable to display limit for seat selection
+        char maxSeat = 'A' + ((int)numberOfSeats - 1);
+        // Is seat selection a letter? Is that letter too big?
+        if (!isalpha(seatSelection) || seatSelection > maxSeat){
+            cout << "Seat must be between A and " << maxSeat << endl;
+            continue;
+        }   // End of out of bounds
+        
+        // Check if seat is taken
+        // Print error if taken
+        if (ArrayOfSeats[row][seat] == '-') {
             cout << "That seat has already been selected" << endl;
+            continue;
+        }
+        // Seat available
         else {
-            ArrayOfSeats[row][seat] = '-';
-            seatsAvailable--;
-            seatCount++;
+            ArrayOfSeats[row][seat] = '-';   // Make unavailable
+            seatsAvailable--;                // Decrement counter
+            seatCount++;                     // Increment counter
             
         }   // End of else
-        //=====================================
         
         // Display seats
         DisplayArrayOfSeats(ArrayOfSeats, numberOfRows, numberOfSeats, seatsAvailable, seatCount);
+        do {
+            // Does the user want another seat?
+            cout << "Would you like to pick another seat [Y or N]: ";
+            cin  >> moreSeats;
+            
+            // Convert to upper
+            moreSeats = toupper(moreSeats);
+            // No more seats?
+            if (moreSeats == 'N')
+                rowSelection = '0';   // Exit loop with exit code for outer loop
+              
+        } while (moreSeats != 'Y' && moreSeats != 'N');
         
     }   while (rowSelection != '0');   // End of do/while
     
     // Cleanup
     MemoryCleanup(ArrayOfSeats, numberOfRows, numberOfSeats);
     
+    // Goodbye
+    cout << "=========================================" << endl;
+    cout << "Thank you for using the Reservation Tracker" << endl;
+    cout << "=========================================" << endl;
     return 0;
 }   // End of main
 
@@ -115,6 +161,7 @@ void InitializeSeats (char **ArrayOfSeats, int numberOfRows, int numberOfSeats) 
 // Start of DisplayArrayOfSeats
 void DisplayArrayOfSeats (char **ArrayOfSeats, int numberOfRows, int numberOfSeats, int seatsAvailable, int seatCount) {
     // For each row
+    cout << "=========================================" << endl;
     for (int r = 0; r < numberOfRows; r++) {
         cout.width(2);
         cout << r+1 << ' ';   // Display row count starting at 1
@@ -124,8 +171,10 @@ void DisplayArrayOfSeats (char **ArrayOfSeats, int numberOfRows, int numberOfSea
         // New line each row
         cout << endl;
     }   // End of loop
+    cout << "=========================================" << endl;
     cout << "Seats Available: " << seatsAvailable << endl;
     cout << "Seats Taken    : " << seatCount << endl;
+    cout << "=========================================" << endl;
 }   // End of DisplayArrayOfSeats
 
 // Start MemoryCleanup
