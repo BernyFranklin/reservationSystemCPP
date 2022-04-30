@@ -76,7 +76,7 @@ int main(int argc, const char * argv[]) {
         seat = seatSelection - 'A';
         
         // Is row out of bounds?
-        if (row > numberOfRows) {
+        if (row > char(numberOfRows - 1)) {
             cout << "Row must be between 1 and " << numberOfRows << endl;
             continue;
         }   // End of out of bounds
@@ -115,7 +115,7 @@ int main(int argc, const char * argv[]) {
             moreSeats = toupper(moreSeats);
             // No more seats?
             if (moreSeats == 'N')
-                rowSelection = '0';   // Exit loop with exit code for outer loop
+                rowSelection = '0';
               
         } while (moreSeats != 'Y' && moreSeats != 'N');
         
