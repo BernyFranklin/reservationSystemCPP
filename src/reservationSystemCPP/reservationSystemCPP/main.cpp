@@ -16,6 +16,8 @@ char **CreateArrayOfSeats (int numberOfRows, int numberOfSeats);
 void InitializeSeats (char **ArrayOfSeats, int numberOfRows, int numberOfSeats);
 void DisplayArrayOfSeats (char **ArrayOfSeats, int numberOfRows, int numberOfSeats);
 void MemoryCleanup (char **ArrayOfSeats, int numberOfRows, int numberOfSeats);
+// Added my input validator
+int inputValidator (const char *prompt);
 
 // Start main
 int main(int argc, const char * argv[]) {
@@ -30,10 +32,13 @@ int main(int argc, const char * argv[]) {
     
     // Get the number of numberOfRows and seats from the user
     // Might use inputValidator() ======================
+    numberOfRows = inputValidator("Enter the number for numberOfRows: ");
+    numberOfSeats = inputValidator("Enter the number for numberOfSeats: ");
+    /*
     cout << "Enter the number for numberOfRows: ";
     cin  >> numberOfRows;
     cout << "Enter the number for numberOfSeats: " ;
-    cin  >> numberOfSeats;
+    cin  >> numberOfSeats;*/
     //==================================================
     
     // Set up array
@@ -94,3 +99,34 @@ void MemoryCleanup (char **ArrayOfSeats, int numberOfRows, int numberOfSeats) {
     // Delete the row array
     delete [] ArrayOfSeats;
 }   // End of MemoryCleanup
+
+// Start inputValidator function
+int inputValidator (const char *prompt) {
+    // Declare variables
+    // Return value used for number
+    int inputValue = 0;
+    // Flag for loop
+    bool isValid;
+    // Start loop for valid input
+    do {
+        // Assume valid input
+        isValid = true;
+        cout << prompt;
+        cin >> inputValue;
+        // Is input a number?
+        if (!cin) {
+            cout << "A numeric value is expected..." << endl << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+            isValid = false;
+        }   // End of !number
+        // Is input positive?
+        else if (inputValue <= 0) {
+            cout << "Number must be greater than zero..." << endl << endl;
+            isValid = false;
+        }   // End of negative input
+    } while (!isValid);   // Loop until input is valid
+    
+    // Returns value to number
+    return inputValue;
+}   // End of inputValidator
