@@ -19,7 +19,28 @@ void MemoryCleanup (char **ArrayOfSeats, int numberOfRows, int numberOfSeats);
 
 // Start main
 int main(int argc, const char * argv[]) {
-    // insert code here...
+    // Declare variables
+    char **ArrayOfSeats;
+    int numberOfRows;
+    int numberOfSeats;
+    char rowSelection;    // 1 to max rows, input from user
+    char seatSelection;   // 'A' to max seats, input from user, convert to num
+    int row;              // Index into ArrayOfSeats, 0 to numberOfRows -1
+    int seat;             // Index into ArrayOfSeats, 0 to numbersOfSeats -1
+    
+    // Get the number of numberOfRows and seats from the user
+    // Might use inputValidator() ======================
+    cout << "Enter the number for numberOfRows: ";
+    cin  >> numberOfRows;
+    cout << "Enter the number for numberOfSeats: " ;
+    cin  >> numberOfSeats;
+    //==================================================
+    
+    // Set up array
+    ArrayOfSeats = CreateArrayOfSeats(numberOfRows, numberOfSeats);
+    InitializeSeats(ArrayOfSeats, numberOfRows, numberOfSeats);
+    DisplayArrayOfSeats(ArrayOfSeats, numberOfRows, numberOfSeats);
+    
     return 0;
 }   // End of main
 
