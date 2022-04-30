@@ -76,6 +76,8 @@ int main(int argc, const char * argv[]) {
         seat = seatSelection - 'A';
         
         // Is row out of bounds?
+        // Checks if ascii code for row is higher than the ascii code for numberOfRows
+        // If a letter is entered it is automatically higher because letters are higher on ascii table
         if (row > char(numberOfRows - 1)) {
             cout << "Row must be between 1 and " << numberOfRows << endl;
             continue;
